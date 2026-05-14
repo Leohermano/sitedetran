@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<!-- Define o tipo do documento como HTML5 -->
+<html lang="pt-BR">
+<!-- O atributo lang="pt-BR" informa ao navegador e leitores de tela
+     que o idioma da página é Português do Brasil -->
+
+<head>
+  <!-- ============================================================
+       CABEÇALHO DA PÁGINA
+       Contém metadados, título e importações de estilos/fontes.
+       Nada aqui é visível diretamente pelo usuário.
+  ============================================================ -->
+
+  <!-- Define a codificação de caracteres como UTF-8,
+       permitindo acentos e caracteres especiais -->
+  <meta charset="UTF-8" />
+
+  <!-- Torna a página responsiva: ajusta o zoom inicial para 1
+       e usa a largura real do dispositivo -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Título que aparece na aba do navegador -->
+  <title>DETRAN-PB — Departamento Estadual de Trânsito da Paraíba</title>
+
+  <!-- Importa o arquivo de estilos CSS externo -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Pré-conecta ao servidor do Google Fonts para carregar as fontes mais rápido -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Importa as fontes personalizadas:
+       - Syne: usada em títulos e destaques (pesos 400, 600, 700, 800)
+       - DM Sans: usada no corpo do texto (pesos 300, 400, 500 — normal e itálico) -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+<!-- ============================================================
+     CORPO DA PÁGINA
+     Tudo o que está aqui é exibido visualmente ao usuário.
+============================================================ -->
+
+
+  <!-- ============================================================
+       BARRA DE ACESSIBILIDADE (topo da página)
+       Permite ajustar o tamanho da fonte e ativar alto contraste.
+       Também exibe links rápidos para portais do governo.
+  ============================================================ -->
+  <div class="a11y-bar">
+
+    <!-- Lado esquerdo: controles de tamanho de fonte e contraste -->
+    <div class="container a11y-inner">
+      <span>Acessibilidade:</span>
+
+      <!-- Diminui o tamanho da fonte (chama adjustFont(-1) no script.js) -->
+      <button onclick="adjustFont(-1)" aria-label="Diminuir fonte">A-</button>
+
+      <!-- Restaura o tamanho padrão da fonte -->
+      <button onclick="adjustFont(0)" aria-label="Fonte padrão">A</button>
+
+      <!-- Aumenta o tamanho da fonte -->
+      <button onclick="adjustFont(1)" aria-label="Aumentar fonte">A+</button>
+
+      <!-- Ativa ou desativa o modo de alto contraste para melhor legibilidade -->
+      <button onclick="toggleContrast()" id="contrast-btn">Alto contraste</button>
+    </div>
+
+    <!-- Lado direito: links para outros portais governamentais -->
+    <div class="container a11y-right">
+      <a href="https://gov.pb.gov.br" target="_blank">Portal do Governo PB</a>
+      <a href="https://sic.pb.gov.br" target="_blank">Acesso à informação</a>
+      <a href="https://ouvidoria.pb.gov.br" target="_blank">Ouvidoria</a>
+    </div>
+
+  </div><!-- fim: barra de acessibilidade -->
+
+
+  <!-- ============================================================
+       CABEÇALHO PRINCIPAL
+       Fica fixo no topo da tela enquanto o usuário rola a página.
+       Contém: logotipo, menu de navegação, busca e botão de agendamento.
+  ============================================================ -->
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <!-- LOGOTIPO ─────────────────────────────────────────────── -->
+      <div class="logo-area">
+        <!-- Quadrado verde com ícone de carro -->
+        <div class="logo-badge">
+          <span class="logo-icon"></span>
+          <a href="index.html">
+            <img src="img/detran.jpg" alt="Logo DETRAN-PB" />
+          </a>
+        </div>
+        <!-- Texto: "DETRAN" em negrito e "Paraíba" menor abaixo -->
+        <div class="logo-text">
+          <strong>DETRAN</strong><span>Paraíba</span>
+        </div>
+      </div><!-- fim: logotipo -->
+
+
+      <!-- MENU DE NAVEGAÇÃO PRINCIPAL ─────────────────────────── -->
+      <!-- id="main-nav" é referenciado pelo JavaScript para abrir/fechar no mobile -->
+      <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+        <ul>
+
+          <!-- Item simples: vai direto para a seção de serviços na página -->
+          <li><a href="#servicos">Serviços</a></li>
+
+          <!-- Item com submenu: a classe "has-dropdown" ativa o menu via CSS ao passar o mouse -->
+          <li class="has-dropdown">
+            <a href="#habilitacao">Habilitação <span class="caret">▾</span></a>
+            <!-- Submenu com os serviços de habilitação disponíveis -->
+            <ul class="dropdown">
+              <li><a href="#">1ª Habilitação (CNH)</a></li>
+              <li><a href="#">Renovação de CNH</a></li>
+              <li><a href="#">Mudança de categoria</a></li>
+              <li><a href="#">Segunda via de CNH</a></li>
+              <li><a href="#">Permissão internacional</a></li>
+            </ul>
+          </li>
+
+          <!-- Item com submenu: serviços relacionados a veículos -->
+          <li class="has-dropdown">
+            <a href="#veiculo">Veículo <span class="caret">▾</span></a>
+            <ul class="dropdown">
+              <li><a href="#">Consulta de veículo</a></li>
+              <li><a href="#">Transferência de propriedade</a></li>
+              <li><a href="#">Licenciamento</a></li>
+              <li><a href="#">CRLV digital</a></li>
+              <li><a href="#">Vistoria veicular</a></li>
+            </ul>
+          </li>
+
+          <!-- Item com submenu: serviços relacionados a infrações e multas -->
+          <li class="has-dropdown">
+            <a href="#infrações">Infrações <span class="caret">▾</span></a>
+            <ul class="dropdown">
+              <li><a href="#">Consulta de multas</a></li>
+              <li><a href="#">Recurso de multa</a></li>
+              <li><a href="#">Pontuação na CNH</a></li>
+              <li><a href="#">RENAINF</a></li>
+            </ul>
+          </li>
+
+          <!-- Itens simples para as demais seções da página -->
+          <li><a href="#ciretrans">Ciretrans</a></li>
+          <li><a href="#noticias">Notícias</a></li>
+          <li><a href="#contato">Contato</a></li>
+
+        </ul>
+      </nav><!-- fim: navegação principal -->
+
+
+      <!-- AÇÕES DO CABEÇALHO ───────────────────────────────────
+           Botões de busca, agendamento e menu hambúrguer (mobile).
+      ─────────────────────────────────────────────────────────── -->
+      <div class="header-actions">
+
+        <!-- Botão de lupa: abre a barra de busca expansível ao clicar -->
+        <button class="btn-search" id="btn-search" aria-label="Abrir busca">
+          <!-- Ícone SVG de lupa desenhado em código puro (sem imagem externa) -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+
+        <!-- Botão verde em destaque: leva o usuário ao formulário de agendamento -->
+        <a href="#agendamento" class="btn-primary">Agendar serviço</a>
+
+        <!-- Botão hambúrguer (três linhas ≡): visível apenas em telas pequenas.
+             Cada <span> representa uma linha do ícone.
+             O JavaScript altera a classe para "open", transformando em ✕. -->
+        <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+      </div><!-- fim: header-actions -->
+
+    </div><!-- fim: container header-inner -->
+
+
+    <!-- BARRA DE BUSCA EXPANSÍVEL ────────────────────────────────
+         Aparece/desaparece ao clicar na lupa.
+         Controlada pelas funções openSearch() e closeSearch() no script.js.
+    ─────────────────────────────────────────────────────────────── -->
+    <div class="search-bar" id="search-bar" aria-hidden="true">
+      <div class="container">
+        <!-- Campo de texto principal onde o usuário digita a busca -->
+        <input
+          type="search"
+          id="search-input"
+          placeholder="O que você está procurando? Ex: renovação CNH, multas…"
+          aria-label="Campo de busca"
+        />
+        <!-- Botão que executa a pesquisa chamando doSearch() -->
+        <button onclick="doSearch()" class="btn-primary">Buscar</button>
+        <!-- Botão para fechar a barra sem realizar a busca -->
+        <button onclick="closeSearch()" class="btn-ghost" aria-label="Fechar busca">✕</button>
+      </div>
+      <!-- Container onde as sugestões de busca aparecem dinamicamente
+           à medida que o usuário digita (gerado pelo JavaScript) -->
+      <div class="search-suggestions" id="search-suggestions"></div>
+    </div><!-- fim: barra de busca -->
+
+  </header><!-- fim: cabeçalho principal -->
+
+
+  <!-- ============================================================
+       SEÇÃO HERO — Banner principal
+       Primeira coisa que o usuário vê ao entrar no site.
+       Contém: título, subtítulo, botões de ação e card de consulta rápida.
+  ============================================================ -->
+  <section class="hero" aria-label="Destaque principal">
+
+    <!-- Elemento decorativo de fundo com gradiente radial (estilizado no CSS) -->
+    <div class="hero-bg"></div>
+
+    <div class="container hero-content">
+
+      <!-- TEXTO DO HERO ────────────────────────────────────────── -->
+      <div class="hero-text">
+        <!-- Texto pequeno acima do título (chamado de "eyebrow" no design) -->
+        <p class="hero-eyebrow">Departamento Estadual de Trânsito · Paraíba</p>
+
+        <!-- Título principal — a tag <em> recebe a cor amarela via CSS -->
+        <h1>Seus serviços de<br><em>trânsito</em> em um só lugar</h1>
+
+        <!-- Frase descritiva resumindo os benefícios do portal -->
+        <p class="hero-subtitle">Habilitação, veículos, multas e muito mais. Rápido, simples e sem fila.</p>
+
+        <!-- Dois botões de chamada para ação (CTA):
+             o primeiro é sólido e o segundo é vazado (ghost) -->
+        <div class="hero-actions">
+          <a href="#servicos" class="btn-hero-primary">Ver todos os serviços</a>
+          <a href="#agendamento" class="btn-hero-ghost">Agendar atendimento</a>
+        </div>
+      </div><!-- fim: hero-text -->
+
+
+      <!-- CARD DE CONSULTA RÁPIDA ─────────────────────────────────
+           Card branco flutuante com três abas: CNH, Veículo e Multa.
+           O usuário digita os dados e recebe o resultado em um modal.
+      ─────────────────────────────────────────────────────────────── -->
+      <div class="hero-card">
+        <p class="card-label">Consulta rápida</p>
+
+        <!-- Abas de navegação entre os tipos de consulta
+             O atributo data-tab indica qual conteúdo exibir ao clicar -->
+        <div class="quick-tabs">
+          <button class="qtab active" data-tab="cnh">CNH</button>
+          <button class="qtab" data-tab="veiculo">Veículo</button>
+          <button class="qtab" data-tab="multa">Multa</button>
+        </div>
+
+        <!-- ABA 1: Consulta da situação da CNH pelo CPF do condutor -->
+        <!-- A classe "active" é alternada pelo JavaScript ao trocar de aba -->
+        <div class="qtab-content active" id="tab-cnh">
+          <label for="cpf-input">CPF do condutor</label>
+          <!-- maxlength="14" limita ao tamanho de um CPF formatado (000.000.000-00) -->
+          <input type="text" id="cpf-input" placeholder="000.000.000-00" maxlength="14" />
+          <!-- Ao clicar, chama consultarCNH() definida no script.js -->
+          <button class="btn-primary full-width" onclick="consultarCNH()">Consultar situação</button>
+        </div>
+
+        <!-- ABA 2: Consulta de veículo pela placa -->
+        <div class="qtab-content" id="tab-veiculo">
+          <label for="placa-input">Placa do veículo</label>
+          <!-- maxlength="8" cobre tanto o padrão antigo (ABC-1234) quanto o Mercosul (ABC1D23) -->
+          <input type="text" id="placa-input" placeholder="ABC-1234 ou ABC1D23" maxlength="8" />
+          <button class="btn-primary full-width" onclick="consultarVeiculo()">Consultar veículo</button>
+        </div>
+
+        <!-- ABA 3: Consulta de multas pelo número do RENAVAM -->
+        <div class="qtab-content" id="tab-multa">
+          <label for="renavam-input">RENAVAM</label>
+          <!-- maxlength="11" corresponde ao tamanho máximo do RENAVAM -->
+          <input type="text" id="renavam-input" placeholder="00000000000" maxlength="11" />
+          <button class="btn-primary full-width" onclick="consultarMulta()">Consultar multas</button>
+        </div>
+
+      </div><!-- fim: card de consulta rápida -->
+
+    </div><!-- fim: container hero-content -->
+  </section><!-- fim: hero -->
+
+
+  <!-- ============================================================
+       BARRA DE ESTATÍSTICAS INSTITUCIONAIS
+       Faixa verde com números que comunicam o porte do DETRAN-PB.
+  ============================================================ -->
+  <section class="stats-bar" aria-label="Números do DETRAN">
+    <div class="container stats-inner">
+
+      <!-- Cada bloco exibe um número em destaque e um rótulo abaixo -->
+      <div class="stat-item">
+        <strong>2.4 M+</strong>
+        <span>veículos registrados</span>
+      </div>
+
+      <!-- Linha divisória vertical entre os itens
+           aria-hidden="true" indica que é decorativa e deve ser ignorada por leitores de tela -->
+      <div class="stat-divider" aria-hidden="true"></div>
+
+      <div class="stat-item">
+        <strong>1.8 M+</strong>
+        <span>condutores habilitados</span>
+      </div>
+
+      <div class="stat-divider" aria-hidden="true"></div>
+
+      <div class="stat-item">
+        <strong>82</strong>
+        <span>municípios atendidos</span>
+      </div>
+
+      <div class="stat-divider" aria-hidden="true"></div>
+
+      <div class="stat-item">
+        <strong>24/7</strong>
+        <span>serviços online</span>
+      </div>
+
+    </div>
+  </section><!-- fim: barra de estatísticas -->
+
+
+  <!-- ============================================================
+       SEÇÃO DE SERVIÇOS MAIS ACESSADOS
+       Grid de cards clicáveis filtráveis por categoria.
+       Os filtros e animações são controlados pelo JavaScript.
+  ============================================================ -->
+  <section class="services-section" id="servicos" aria-labelledby="services-title">
+    <div class="container">
+
+      <!-- Cabeçalho da seção: título e subtítulo -->
+      <div class="section-header">
+        <!-- O id="services-title" conecta o h2 ao aria-labelledby da section -->
+        <h2 id="services-title">Serviços mais acessados</h2>
+        <p>Encontre rapidamente o que você precisa</p>
+      </div>
+
+      <!-- BOTÕES DE FILTRO ─────────────────────────────────────────
+           Cada botão tem um data-filter que o JavaScript compara
+           com o data-category de cada card para mostrar/ocultar.
+      ─────────────────────────────────────────────────────────────── -->
+      <div class="services-filter" role="group" aria-label="Filtrar serviços">
+        <button class="filter-btn active" data-filter="todos">Todos</button>
+        <button class="filter-btn" data-filter="habilitacao">Habilitação</button>
+        <button class="filter-btn" data-filter="veiculo">Veículo</button>
+        <button class="filter-btn" data-filter="infracao">Infrações</button>
+        <button class="filter-btn" data-filter="educacao">Educação</button>
+      </div>
+
+      <!-- GRADE DE CARDS DE SERVIÇO ────────────────────────────────
+           Cada card é um link <a> com:
+           - data-category: usado pelo filtro JavaScript
+           - service-icon: emoji decorativo
+           - service-tag: badge colorido com a categoria
+      ─────────────────────────────────────────────────────────────── -->
+      <div class="services-grid" id="services-grid">
+
+        <!-- Renovação de CNH -->
+        <a href="#" class="service-card" data-category="habilitacao">
+          <div class="service-icon" aria-hidden="true">🪪</div>
+          <h3>Renovação de CNH</h3>
+          <p>Renove sua habilitação com antecedência e evite multas.</p>
+          <span class="service-tag">Habilitação</span>
+        </a>
+
+        <!-- Primeira habilitação -->
+        <a href="#" class="service-card" data-category="habilitacao">
+          <div class="service-icon" aria-hidden="true">📋</div>
+          <h3>1ª Habilitação</h3>
+          <p>Saiba como obter sua primeira CNH passo a passo.</p>
+          <span class="service-tag">Habilitação</span>
+        </a>
+
+        <!-- CRLV Digital -->
+        <a href="#" class="service-card" data-category="veiculo">
+          <div class="service-icon" aria-hidden="true">📄</div>
+          <h3>CRLV Digital</h3>
+          <p>Baixe o documento do seu veículo diretamente pelo app.</p>
+          <span class="service-tag">Veículo</span>
+        </a>
+
+        <!-- Transferência de veículo -->
+        <a href="#" class="service-card" data-category="veiculo">
+          <div class="service-icon" aria-hidden="true">🔄</div>
+          <h3>Transferência de veículo</h3>
+          <p>Transfira a propriedade de forma segura e sem burocracia.</p>
+          <span class="service-tag">Veículo</span>
+        </a>
+
+        <!-- Consulta de multas -->
+        <a href="#" class="service-card" data-category="infracao">
+          <div class="service-icon" aria-hidden="true">🔍</div>
+          <h3>Consulta de multas</h3>
+          <p>Verifique débitos e infrações vinculados ao seu veículo.</p>
+          <span class="service-tag">Infrações</span>
+        </a>
+
+        <!-- Recurso de multa -->
+        <a href="#" class="service-card" data-category="infracao">
+          <div class="service-icon" aria-hidden="true">📝</div>
+          <h3>Recurso de multa</h3>
+          <p>Conteste infrações de trânsito em primeira e segunda instância.</p>
+          <span class="service-tag">Infrações</span>
+        </a>
+
+        <!-- Vistoria veicular -->
+        <a href="#" class="service-card" data-category="veiculo">
+          <div class="service-icon" aria-hidden="true">🔧</div>
+          <h3>Vistoria veicular</h3>
+          <p>Agende a vistoria obrigatória do seu veículo com facilidade.</p>
+          <span class="service-tag">Veículo</span>
+        </a>
+
+        <!-- Educação no trânsito -->
+        <a href="#" class="service-card" data-category="educacao">
+          <div class="service-icon" aria-hidden="true">🎓</div>
+          <h3>Educação no trânsito</h3>
+          <p>Campanhas, conteúdos educativos e estatísticas de acidentes.</p>
+          <span class="service-tag">Educação</span>
+        </a>
+
+        <!-- Permissão Internacional de Dirigir -->
+        <a href="#" class="service-card" data-category="habilitacao">
+          <div class="service-icon" aria-hidden="true">🌍</div>
+          <h3>Permissão Internacional</h3>
+          <p>Solicite a PID para dirigir legalmente no exterior.</p>
+          <span class="service-tag">Habilitação</span>
+        </a>
+
+      </div><!-- fim: services-grid -->
+
+      <!-- Botão que leva para a listagem completa de serviços -->
+      <div class="services-cta">
+        <a href="#" class="btn-outline">Ver todos os serviços →</a>
+      </div>
+
+    </div>
+  </section><!-- fim: seção de serviços -->
+
+
+  <!-- ============================================================
+       SEÇÃO DE AGENDAMENTO PRESENCIAL
+       Formulário para escolher unidade, serviço e data do atendimento.
+  ============================================================ -->
+  <section class="agendamento-section" id="agendamento" aria-labelledby="agend-title">
+    <div class="container agendamento-inner">
+
+      <!-- TEXTO EXPLICATIVO ─────────────────────────────────────── -->
+      <div class="agendamento-text">
+        <h2 id="agend-title">Agende seu atendimento presencial</h2>
+        <p>Evite filas. Escolha a Ciretran mais próxima de você, o serviço desejado e o melhor horário. Em poucos cliques.</p>
+
+        <!-- Lista de vantagens do agendamento online -->
+        <ul class="agend-features">
+          <li>✓ Mais de 20 Ciretrans em todo o estado</li>
+          <li>✓ Confirmação por e-mail e SMS</li>
+          <li>✓ Cancelamento ou reagendamento fácil</li>
+          <li>✓ Sem custo adicional</li>
+        </ul>
+      </div><!-- fim: agendamento-text -->
+
+
+      <!-- FORMULÁRIO DE AGENDAMENTO ─────────────────────────────── -->
+      <div class="agendamento-form" role="form" aria-labelledby="agend-title">
+
+        <!-- Seleção da unidade de atendimento (Ciretran) -->
+        <div class="form-group">
+          <label for="ag-ciretran">Ciretran</label>
+          <select id="ag-ciretran">
+            <option value="">Selecione a unidade</option>
+            <option>João Pessoa — Sede</option>
+            <option>Campina Grande</option>
+            <option>Patos</option>
+            <option>Cajazeiras</option>
+            <option>Guarabira</option>
+            <option>Sousa</option>
+            <option>Bayeux</option>
+            <option>Santa Rita</option>
+          </select>
+        </div>
+
+        <!-- Seleção do serviço que o cidadão deseja realizar -->
+        <div class="form-group">
+          <label for="ag-servico">Serviço</label>
+          <select id="ag-servico">
+            <option value="">Selecione o serviço</option>
+            <option>Renovação de CNH</option>
+            <option>1ª Habilitação</option>
+            <option>Transferência de veículo</option>
+            <option>Vistoria veicular</option>
+            <option>Recurso de multa</option>
+            <option>Mudança de categoria</option>
+            <option>Segunda via de CNH</option>
+          </select>
+        </div>
+
+        <!-- Data desejada para o atendimento
+             O atributo min="" é preenchido pelo JavaScript com a data de hoje,
+             impedindo que o usuário selecione datas no passado -->
+        <div class="form-group">
+          <label for="ag-data">Data preferencial</label>
+          <input type="date" id="ag-data" min="" />
+        </div>
+
+        <!-- CPF do cidadão para identificação no sistema -->
+        <div class="form-group">
+          <label for="ag-cpf">CPF</label>
+          <input type="text" id="ag-cpf" placeholder="000.000.000-00" maxlength="14" />
+        </div>
+
+        <!-- Botão que chama agendar() no JavaScript para verificar horários disponíveis -->
+        <button class="btn-primary full-width" onclick="agendar()">Verificar disponibilidade</button>
+
+        <!-- Aviso informativo abaixo do botão -->
+        <p class="form-note">Ao continuar, você será redirecionado ao sistema oficial de agendamento do DETRAN-PB.</p>
+
+      </div><!-- fim: agendamento-form -->
+
+    </div>
+  </section><!-- fim: agendamento -->
+
+
+  <!-- ============================================================
+       SEÇÃO DE NOTÍCIAS E AVISOS
+       Grid editorial com artigos recentes do DETRAN-PB.
+       O primeiro card é "destaque" e ocupa mais espaço no grid.
+  ============================================================ -->
+  <section class="noticias-section" id="noticias" aria-labelledby="news-title">
+    <div class="container">
+
+      <!-- Cabeçalho com título e link para todas as notícias -->
+      <div class="section-header">
+        <h2 id="news-title">Notícias e avisos</h2>
+        <a href="#" class="link-all">Ver todas →</a>
+      </div>
+
+      <div class="noticias-grid">
+
+        <!-- NOTÍCIA DESTAQUE: ocupa 2 linhas no grid (classe "destaque") -->
+        <article class="noticia-card destaque">
+          <!-- Tag "urgente" tem cor amarelada para chamar atenção -->
+          <div class="noticia-tag urgente">Aviso importante</div>
+          <h3>DETRAN-PB lança novo sistema de agendamento online</h3>
+          <p>Nova plataforma facilita o acesso aos serviços e reduz o tempo de espera nas unidades de atendimento presencial.</p>
+          <div class="noticia-meta">
+            <!-- O elemento <time> com datetime melhora acessibilidade e SEO -->
+            <time datetime="2025-05-10">10 maio 2025</time>
+            <a href="#" class="noticia-link">Ler mais →</a>
+          </div>
+        </article>
+
+        <!-- Notícia comum 1 -->
+        <article class="noticia-card">
+          <div class="noticia-tag">Trânsito</div>
+          <h3>Campanha Maio Amarelo começa com ações em todo o estado</h3>
+          <p>Atividades educativas e blitz educativas marcam o início do mês de conscientização sobre segurança no trânsito.</p>
+          <div class="noticia-meta">
+            <time datetime="2025-05-07">7 maio 2025</time>
+            <a href="#" class="noticia-link">Ler mais →</a>
+          </div>
+        </article>
+
+        <!-- Notícia comum 2 -->
+        <article class="noticia-card">
+          <div class="noticia-tag">CNH</div>
+          <h3>Prazo para renovação de CNH vencidas no período da pandemia se encerra em julho</h3>
+          <p>Condutores que tiveram suas habilitações prorrogadas devem regularizar a situação antes do prazo final.</p>
+          <div class="noticia-meta">
+            <time datetime="2025-05-03">3 maio 2025</time>
+            <a href="#" class="noticia-link">Ler mais →</a>
+          </div>
+        </article>
+
+        <!-- Notícia comum 3 -->
+        <article class="noticia-card">
+          <div class="noticia-tag">Veículos</div>
+          <h3>Calendário de licenciamento 2025: confira as datas por final de placa</h3>
+          <p>Veja o calendário completo do licenciamento anual de veículos e evite multas por atraso no pagamento.</p>
+          <div class="noticia-meta">
+            <time datetime="2025-04-28">28 abr. 2025</time>
+            <a href="#" class="noticia-link">Ler mais →</a>
+          </div>
+        </article>
+
+      </div><!-- fim: noticias-grid -->
+    </div>
+  </section><!-- fim: notícias -->
+
+
+  <!-- ============================================================
+       SEÇÃO LOCALIZADOR DE CIRETRANS
+       Busca por cidade + cards das unidades de atendimento.
+       Os cards são gerados e filtrados dinamicamente pelo JavaScript.
+  ============================================================ -->
+  <section class="ciretrans-section" id="ciretrans" aria-labelledby="ciretrans-title">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 id="ciretrans-title">Encontre uma Ciretran</h2>
+        <p>Localize a unidade de atendimento mais próxima de você</p>
+      </div>
+
+      <!-- Campo de busca: a cada tecla digitada, chama filtrarCiretrans()
+           passando o valor atual do campo como parâmetro -->
+      <div class="ciretrans-search">
+        <input
+          type="text"
+          id="ciretran-search"
+          placeholder="Digite sua cidade…"
+          aria-label="Buscar Ciretran por cidade"
+          oninput="filtrarCiretrans(this.value)"
+        />
+      </div>
+
+      <!-- Container onde os cards de Ciretran são inseridos pelo script.js
+           através da função renderCiretrans() -->
+      <div class="ciretrans-grid" id="ciretrans-list">
+        <!-- Conteúdo gerado automaticamente pelo JavaScript -->
+      </div>
+
+    </div>
+  </section><!-- fim: ciretrans -->
+
+
+  <!-- ============================================================
+       SEÇÃO BANNER DO APLICATIVO MOBILE
+       Divulga o app do DETRAN-PB com mockup visual do celular.
+  ============================================================ -->
+  <section class="app-banner" aria-label="Aplicativo DETRAN-PB">
+    <div class="container app-inner">
+
+      <!-- TEXTO E BOTÕES DE DOWNLOAD ──────────────────────────── -->
+      <div class="app-text">
+        <!-- Texto pequeno acima do título (eyebrow) -->
+        <p class="app-eyebrow">Disponível para Android e iOS</p>
+        <h2>Leve o DETRAN no seu bolso</h2>
+        <p>Com o app do DETRAN-PB você acessa CNH digital, CRLV, consulta de multas e muito mais — direto do seu celular.</p>
+
+        <!-- Botões direcionando para as lojas de aplicativos -->
+        <div class="app-buttons">
+          <a href="#" class="store-btn" aria-label="Baixar no Google Play">
+            <span class="store-icon">▶</span>
+            <div>
+              <small>Disponível no</small>
+              <strong>Google Play</strong>
+            </div>
+          </a>
+          <a href="#" class="store-btn" aria-label="Baixar na App Store">
+            <span class="store-icon"></span>
+            <div>
+              <small>Baixar na</small>
+              <strong>App Store</strong>
+            </div>
+          </a>
+        </div>
+      </div><!-- fim: app-text -->
+
+      <!-- MOCKUP ILUSTRATIVO DO CELULAR ────────────────────────────
+           Elemento puramente visual, sem conteúdo funcional.
+           aria-hidden="true" faz leitores de tela ignorarem este bloco.
+      ─────────────────────────────────────────────────────────────── -->
+      <div class="app-visual" aria-hidden="true">
+        <div class="phone-mockup">
+          <div class="phone-screen">
+
+            <!-- Entalhe superior do aparelho (notch) -->
+            <div class="phone-notch"></div>
+
+            <!-- Interface simulada do aplicativo -->
+            <div class="phone-ui">
+              <p class="phone-greeting">Olá, condutor</p>
+
+              <!-- Card simulando a CNH Digital no app -->
+              <div class="phone-card">
+                <span>🪪 CNH Digital</span>
+                <span class="phone-status valid">Válida</span>
+              </div>
+
+              <!-- Card simulando o CRLV 2025 no app -->
+              <div class="phone-card">
+                <span>🚗 CRLV 2025</span>
+                <span class="phone-status valid">Em dia</span>
+              </div>
+
+              <!-- Card simulando a situação de multas no app -->
+              <div class="phone-card">
+                <span>⚠️ Multas</span>
+                <span class="phone-status none">Nenhuma</span>
+              </div>
+
+            </div><!-- fim: phone-ui -->
+          </div><!-- fim: phone-screen -->
+        </div><!-- fim: phone-mockup -->
+      </div><!-- fim: app-visual -->
+
+    </div>
+  </section><!-- fim: banner do app -->
+
+
+  <!-- ============================================================
+       SEÇÃO DE CONTATO
+       Informações de atendimento + formulário de envio de mensagem.
+  ============================================================ -->
+  <section class="contato-section" id="contato" aria-labelledby="contact-title">
+    <div class="container contato-inner">
+
+      <!-- INFORMAÇÕES DOS CANAIS DE ATENDIMENTO ───────────────── -->
+      <div class="contato-info">
+        <h2 id="contact-title">Fale com o DETRAN-PB</h2>
+        <p>Nossos canais de atendimento estão disponíveis de segunda a sexta, das 8h às 17h.</p>
+
+        <!-- Lista de canais: cada item tem ícone + título + detalhe -->
+        <div class="contact-channels">
+
+          <div class="channel">
+            <span class="channel-icon">📞</span>
+            <div>
+              <strong>Central telefônica</strong>
+              <span>(83) 3218-8500</span>
+            </div>
+          </div>
+
+          <div class="channel">
+            <span class="channel-icon">✉️</span>
+            <div>
+              <strong>E-mail</strong>
+              <span>atendimento@detran.pb.gov.br</span>
+            </div>
+          </div>
+
+          <div class="channel">
+            <span class="channel-icon">📍</span>
+            <div>
+              <strong>Sede — João Pessoa</strong>
+              <span>Av. Monsenhor Walfredo Leal, 484 — Tambiá</span>
+            </div>
+          </div>
+
+          <div class="channel">
+            <span class="channel-icon">🕐</span>
+            <div>
+              <strong>Horário de atendimento</strong>
+              <span>Seg–Sex, 8h às 17h</span>
+            </div>
+          </div>
+
+        </div><!-- fim: contact-channels -->
+
+        <!-- Ícones de redes sociais com links externos
+             rel="noopener" é uma medida de segurança para links target="_blank" -->
+        <div class="social-links" aria-label="Redes sociais">
+
+          <!-- Ícone do Facebook (SVG inline para não depender de biblioteca) -->
+          <a href="https://facebook.com/detrangovpb" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+          </a>
+
+          <!-- Ícone do Instagram -->
+          <a href="https://instagram.com/detrangovpb" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+
+          <!-- Ícone do YouTube -->
+          <a href="https://youtube.com/Detranpb" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+              <polygon fill="white" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/>
+            </svg>
+          </a>
+
+        </div><!-- fim: social-links -->
+      </div><!-- fim: contato-info -->
+
+
+      <!-- FORMULÁRIO DE ENVIO DE MENSAGEM ────────────────────────
+           onsubmit="enviarMensagem(event)" aciona a validação e envio no JavaScript.
+           novalidate desativa a validação nativa do navegador (feita manualmente no JS).
+      ─────────────────────────────────────────────────────────── -->
+      <div class="contato-form-area">
+        <h3>Envie uma mensagem</h3>
+
+        <form class="contato-form" onsubmit="enviarMensagem(event)" novalidate>
+
+          <!-- Linha com dois campos lado a lado (nome e e-mail) -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cont-nome">Nome completo</label>
+              <input type="text" id="cont-nome" placeholder="Seu nome" required />
+            </div>
+            <div class="form-group">
+              <label for="cont-email">E-mail</label>
+              <input type="email" id="cont-email" placeholder="seu@email.com" required />
+            </div>
+          </div>
+
+          <!-- Assunto da mensagem em formato de lista suspensa -->
+          <div class="form-group">
+            <label for="cont-assunto">Assunto</label>
+            <select id="cont-assunto" required>
+              <option value="">Selecione o assunto</option>
+              <option>CNH / Habilitação</option>
+              <option>Veículo / Licenciamento</option>
+              <option>Multas / Infrações</option>
+              <option>Agendamento</option>
+              <option>Elogio</option>
+              <option>Reclamação</option>
+              <option>Outros</option>
+            </select>
+          </div>
+
+          <!-- Área de texto para o corpo da mensagem (4 linhas visíveis) -->
+          <div class="form-group">
+            <label for="cont-msg">Mensagem</label>
+            <textarea id="cont-msg" rows="4" placeholder="Descreva sua dúvida ou solicitação…" required></textarea>
+          </div>
+
+          <!-- Botão de envio do formulário -->
+          <button type="submit" class="btn-primary full-width">Enviar mensagem</button>
+
+        </form>
+
+        <!-- Mensagem de confirmação exibida após o envio bem-sucedido.
+             Começa oculta (hidden) e é exibida pelo JavaScript.
+             aria-live="polite" faz o leitor de tela anunciar quando aparecer. -->
+        <div class="form-success" id="form-success" aria-live="polite" hidden>
+          ✅ Mensagem enviada com sucesso! Retornaremos em até 2 dias úteis.
+        </div>
+
+      </div><!-- fim: contato-form-area -->
+
+    </div>
+  </section><!-- fim: contato -->
+
+
+  <!-- ============================================================
+       RODAPÉ DO SITE
+       Logo + descrição + quatro colunas de links + barra de copyright.
+       role="contentinfo" ajuda tecnologias assistivas a identificá-lo.
+  ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+
+    <!-- Parte superior do rodapé: logo e colunas de links -->
+    <div class="container footer-top">
+
+      <!-- Marca do rodapé com logo menor e breve descrição institucional -->
+      <div class="footer-brand">
+        <div class="logo-area">
+          <!-- Versão reduzida do badge (classe "small" reduz o tamanho via CSS) -->
+          <div class="logo-badge small">
+            <span class="logo-icon">🚗</span>
+          </div>
+          <div class="logo-text">
+            <strong>DETRAN</strong><span>Paraíba</span>
+          </div>
+        </div>
+        <p>Departamento Estadual de Trânsito da Paraíba. Segurança e mobilidade para todos.</p>
+      </div><!-- fim: footer-brand -->
+
+      <!-- Quatro colunas temáticas de links -->
+      <nav class="footer-nav" aria-label="Links do rodapé">
+
+        <!-- Coluna 1: serviços de habilitação -->
+        <div class="footer-col">
+          <h4>Habilitação</h4>
+          <ul>
+            <li><a href="#">1ª Habilitação</a></li>
+            <li><a href="#">Renovação de CNH</a></li>
+            <li><a href="#">Mudança de categoria</a></li>
+            <li><a href="#">Segunda via</a></li>
+            <li><a href="#">CNH digital</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 2: serviços de veículos -->
+        <div class="footer-col">
+          <h4>Veículos</h4>
+          <ul>
+            <li><a href="#">Licenciamento</a></li>
+            <li><a href="#">Transferência</a></li>
+            <li><a href="#">CRLV digital</a></li>
+            <li><a href="#">Vistoria</a></li>
+            <li><a href="#">Registro</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 3: serviços de infrações -->
+        <div class="footer-col">
+          <h4>Infrações</h4>
+          <ul>
+            <li><a href="#">Consulta de multas</a></li>
+            <li><a href="#">Recurso JARI</a></li>
+            <li><a href="#">Pontuação CNH</a></li>
+            <li><a href="#">Suspensão</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 4: informações institucionais -->
+        <div class="footer-col">
+          <h4>Institucional</h4>
+          <ul>
+            <li><a href="#">Sobre o DETRAN</a></li>
+            <li><a href="#">Ciretrans</a></li>
+            <li><a href="#">Licitações</a></li>
+            <li><a href="#">Transparência</a></li>
+            <li><a href="#">Ouvidoria</a></li>
+          </ul>
+        </div>
+
+      </nav><!-- fim: footer-nav -->
+    </div><!-- fim: footer-top -->
+
+    <!-- Barra inferior do rodapé: copyright e links legais -->
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>© 2025 DETRAN-PB — Governo do Estado da Paraíba. Todos os direitos reservados.</p>
+        <div class="footer-links">
+          <a href="#">Política de privacidade</a>
+          <a href="#">Acessibilidade</a>
+          <a href="#">Mapa do site</a>
+        </div>
+      </div>
+    </div><!-- fim: footer-bottom -->
+
+  </footer><!-- fim: rodapé -->
+
+
+  <!-- ============================================================
+       BOTÃO "VOLTAR AO TOPO"
+       Aparece fixo no canto inferior direito após o usuário rolar
+       400px para baixo. O JavaScript gerencia a classe "visible".
+  ============================================================ -->
+  <button
+    class="back-to-top"
+    id="back-to-top"
+    aria-label="Voltar ao topo"
+    onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+  >↑</button>
+
+
+  <!-- ============================================================
+       MODAL DE RESULTADO DAS CONSULTAS
+       Janela flutuante centralizada sobre um overlay escuro.
+       Usada por: consultarCNH(), consultarVeiculo(), consultarMulta().
+       O atributo hidden oculta o modal por padrão.
+       role="dialog" + aria-modal="true" informam leitores de tela.
+  ============================================================ -->
+  <div
+    class="modal-overlay"
+    id="modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    hidden
+  >
+    <div class="modal">
+      <!-- Botão de fechar no canto superior direito do modal -->
+      <button class="modal-close" onclick="closeModal()" aria-label="Fechar">✕</button>
+
+      <!-- Título dinâmico: definido pelo JavaScript conforme o tipo de consulta -->
+      <h3 id="modal-title">Resultado da consulta</h3>
+
+      <!-- Corpo dinâmico: preenchido pelo JavaScript com o HTML do resultado -->
+      <div id="modal-body"></div>
+    </div>
+  </div><!-- fim: modal -->
+
+
+  <!-- Importa o arquivo JavaScript no final do <body>
+       Isso garante que todos os elementos HTML já existam no DOM
+       antes que o JavaScript tente acessá-los -->
+  <script src="script.js"></script>
+
+</body>
+</html>
