@@ -90,7 +90,7 @@
         <div class="logo-badge">
           <span class="logo-icon"></span>
           <a href="index.html">
-            <img src="img/detran.jpg" alt="Logo DETRAN-PB" />
+            <img src="img/logo1.png" alt="Logo DETRAN-PB" />
           </a>
         </div>
         <!-- Texto: "DETRAN" em negrito e "Paraíba" menor abaixo -->
@@ -529,106 +529,9 @@
   </section><!-- fim: agendamento -->
 
 
-  <!-- ============================================================
-       SEÇÃO DE NOTÍCIAS E AVISOS
-       Grid editorial com artigos recentes do DETRAN-PB.
-       O primeiro card é "destaque" e ocupa mais espaço no grid.
-  ============================================================ -->
-  <section class="noticias-section" id="noticias" aria-labelledby="news-title">
-    <div class="container">
-
-      <!-- Cabeçalho com título e link para todas as notícias -->
-      <div class="section-header">
-        <h2 id="news-title">Notícias e avisos</h2>
-        <a href="#" class="link-all">Ver todas →</a>
-      </div>
-
-      <div class="noticias-grid">
-
-        <!-- NOTÍCIA DESTAQUE: ocupa 2 linhas no grid (classe "destaque") -->
-        <article class="noticia-card destaque">
-          <!-- Tag "urgente" tem cor amarelada para chamar atenção -->
-          <div class="noticia-tag urgente">Aviso importante</div>
-          <h3>DETRAN-PB lança novo sistema de agendamento online</h3>
-          <p>Nova plataforma facilita o acesso aos serviços e reduz o tempo de espera nas unidades de atendimento presencial.</p>
-          <div class="noticia-meta">
-            <!-- O elemento <time> com datetime melhora acessibilidade e SEO -->
-            <time datetime="2025-05-10">10 maio 2025</time>
-            <a href="#" class="noticia-link">Ler mais →</a>
-          </div>
-        </article>
-
-        <!-- Notícia comum 1 -->
-        <article class="noticia-card">
-          <div class="noticia-tag">Trânsito</div>
-          <h3>Campanha Maio Amarelo começa com ações em todo o estado</h3>
-          <p>Atividades educativas e blitz educativas marcam o início do mês de conscientização sobre segurança no trânsito.</p>
-          <div class="noticia-meta">
-            <time datetime="2025-05-07">7 maio 2025</time>
-            <a href="#" class="noticia-link">Ler mais →</a>
-          </div>
-        </article>
-
-        <!-- Notícia comum 2 -->
-        <article class="noticia-card">
-          <div class="noticia-tag">CNH</div>
-          <h3>Prazo para renovação de CNH vencidas no período da pandemia se encerra em julho</h3>
-          <p>Condutores que tiveram suas habilitações prorrogadas devem regularizar a situação antes do prazo final.</p>
-          <div class="noticia-meta">
-            <time datetime="2025-05-03">3 maio 2025</time>
-            <a href="#" class="noticia-link">Ler mais →</a>
-          </div>
-        </article>
-
-        <!-- Notícia comum 3 -->
-        <article class="noticia-card">
-          <div class="noticia-tag">Veículos</div>
-          <h3>Calendário de licenciamento 2025: confira as datas por final de placa</h3>
-          <p>Veja o calendário completo do licenciamento anual de veículos e evite multas por atraso no pagamento.</p>
-          <div class="noticia-meta">
-            <time datetime="2025-04-28">28 abr. 2025</time>
-            <a href="#" class="noticia-link">Ler mais →</a>
-          </div>
-        </article>
-
-      </div><!-- fim: noticias-grid -->
-    </div>
-  </section><!-- fim: notícias -->
 
 
-  <!-- ============================================================
-       SEÇÃO LOCALIZADOR DE CIRETRANS
-       Busca por cidade + cards das unidades de atendimento.
-       Os cards são gerados e filtrados dinamicamente pelo JavaScript.
-  ============================================================ -->
-  <section class="ciretrans-section" id="ciretrans" aria-labelledby="ciretrans-title">
-    <div class="container">
 
-      <div class="section-header">
-        <h2 id="ciretrans-title">Encontre uma Ciretran</h2>
-        <p>Localize a unidade de atendimento mais próxima de você</p>
-      </div>
-
-      <!-- Campo de busca: a cada tecla digitada, chama filtrarCiretrans()
-           passando o valor atual do campo como parâmetro -->
-      <div class="ciretrans-search">
-        <input
-          type="text"
-          id="ciretran-search"
-          placeholder="Digite sua cidade…"
-          aria-label="Buscar Ciretran por cidade"
-          oninput="filtrarCiretrans(this.value)"
-        />
-      </div>
-
-      <!-- Container onde os cards de Ciretran são inseridos pelo script.js
-           através da função renderCiretrans() -->
-      <div class="ciretrans-grid" id="ciretrans-list">
-        <!-- Conteúdo gerado automaticamente pelo JavaScript -->
-      </div>
-
-    </div>
-  </section><!-- fim: ciretrans -->
 
 
   <!-- ============================================================
@@ -785,66 +688,8 @@
 
         </div><!-- fim: social-links -->
       </div><!-- fim: contato-info -->
-
-
-      <!-- FORMULÁRIO DE ENVIO DE MENSAGEM ────────────────────────
-           onsubmit="enviarMensagem(event)" aciona a validação e envio no JavaScript.
-           novalidate desativa a validação nativa do navegador (feita manualmente no JS).
-      ─────────────────────────────────────────────────────────── -->
-      <div class="contato-form-area">
-        <h3>Envie uma mensagem</h3>
-
-        <form class="contato-form" onsubmit="enviarMensagem(event)" novalidate>
-
-          <!-- Linha com dois campos lado a lado (nome e e-mail) -->
-          <div class="form-row">
-            <div class="form-group">
-              <label for="cont-nome">Nome completo</label>
-              <input type="text" id="cont-nome" placeholder="Seu nome" required />
-            </div>
-            <div class="form-group">
-              <label for="cont-email">E-mail</label>
-              <input type="email" id="cont-email" placeholder="seu@email.com" required />
-            </div>
-          </div>
-
-          <!-- Assunto da mensagem em formato de lista suspensa -->
-          <div class="form-group">
-            <label for="cont-assunto">Assunto</label>
-            <select id="cont-assunto" required>
-              <option value="">Selecione o assunto</option>
-              <option>CNH / Habilitação</option>
-              <option>Veículo / Licenciamento</option>
-              <option>Multas / Infrações</option>
-              <option>Agendamento</option>
-              <option>Elogio</option>
-              <option>Reclamação</option>
-              <option>Outros</option>
-            </select>
-          </div>
-
-          <!-- Área de texto para o corpo da mensagem (4 linhas visíveis) -->
-          <div class="form-group">
-            <label for="cont-msg">Mensagem</label>
-            <textarea id="cont-msg" rows="4" placeholder="Descreva sua dúvida ou solicitação…" required></textarea>
-          </div>
-
-          <!-- Botão de envio do formulário -->
-          <button type="submit" class="btn-primary full-width">Enviar mensagem</button>
-
-        </form>
-
-        <!-- Mensagem de confirmação exibida após o envio bem-sucedido.
-             Começa oculta (hidden) e é exibida pelo JavaScript.
-             aria-live="polite" faz o leitor de tela anunciar quando aparecer. -->
-        <div class="form-success" id="form-success" aria-live="polite" hidden>
-          ✅ Mensagem enviada com sucesso! Retornaremos em até 2 dias úteis.
-        </div>
-
-      </div><!-- fim: contato-form-area -->
-
     </div>
-  </section><!-- fim: contato -->
+  </section><!-- fim: seção de contato -->
 
 
   <!-- ============================================================
@@ -861,9 +706,6 @@
       <div class="footer-brand">
         <div class="logo-area">
           <!-- Versão reduzida do badge (classe "small" reduz o tamanho via CSS) -->
-          <div class="logo-badge small">
-            <span class="logo-icon">🚗</span>
-          </div>
           <div class="logo-text">
             <strong>DETRAN</strong><span>Paraíba</span>
           </div>
@@ -927,7 +769,7 @@
     <!-- Barra inferior do rodapé: copyright e links legais -->
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
-        <p>© 2025 DETRAN-PB — Governo do Estado da Paraíba. Todos os direitos reservados.</p>
+        <p>© 2026 DETRAN-PB — Governo do Estado da Paraíba. Todos os direitos reservados.</p>
         <div class="footer-links">
           <a href="#">Política de privacidade</a>
           <a href="#">Acessibilidade</a>
@@ -974,16 +816,9 @@
       <!-- Título dinâmico: definido pelo JavaScript conforme o tipo de consulta -->
       <h3 id="modal-title">Resultado da consulta</h3>
 
-      <!-- Corpo dinâmico: preenchido pelo JavaScript com o HTML do resultado -->
+      
       <div id="modal-body"></div>
     </div>
-  </div><!-- fim: modal -->
-
-
-  <!-- Importa o arquivo JavaScript no final do <body>
-       Isso garante que todos os elementos HTML já existam no DOM
-       antes que o JavaScript tente acessá-los -->
-  <script src="script.js"></script>
-
+  </div>
 </body>
 </html>

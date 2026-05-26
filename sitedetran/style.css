@@ -1,90 +1,151 @@
-/* =============================================
-   DETRAN-PB — Redesign 2025
-   style.css
-   ============================================= */
 
-/* ─── RESET & BASE ─── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+
+/* ─────────────────────────────────────────────
+   RESET E CONFIGURAÇÕES BASE
+   Zeramos margens, paddings e definimos o
+   box-sizing para todos os elementos.
+───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box; /* Faz com que padding e border sejam incluídos no tamanho total do elemento */
+  margin: 0;              /* Remove margens padrão do navegador */
+  padding: 0;             /* Remove espaçamentos internos padrão */
+}
+
+
+/* ─────────────────────────────────────────────
+   VARIÁVEIS GLOBAIS (Custom Properties)
+   Definidas em :root para ficarem disponíveis
+   em todo o documento. Facilitam manutenção:
+   basta alterar o valor aqui para refletir
+   em todo o site.
+───────────────────────────────────────────── */
 :root {
-  --green:        #00a300;
-  --green-dark:   #007a00;
-  --green-light:  #e8f5e8;
-  --green-mid:    #3dba3d;
-  --yellow:       #f5c800;
-  --yellow-soft:  #fef9e7;
-  --navy:         #1a2a3a;
-  --navy-mid:     #2c3e50;
-  --gray-900:     #111827;
-  --gray-700:     #374151;
-  --gray-500:     #6b7280;
-  --gray-300:     #d1d5db;
-  --gray-100:     #f3f4f6;
-  --gray-50:      #f9fafb;
-  --white:        #ffffff;
-  --radius-sm:    6px;
-  --radius-md:    12px;
-  --radius-lg:    20px;
-  --radius-xl:    28px;
-  --shadow-sm:    0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
-  --shadow-md:    0 4px 16px rgba(0,0,0,.1);
-  --shadow-lg:    0 12px 40px rgba(0,0,0,.14);
-  --font-display: 'Syne', sans-serif;
-  --font-body:    'DM Sans', sans-serif;
+  /* Cores principais da paleta do DETRAN-PB */
+  --green:        #1B3A5C; /* Verde institucional principal */
+  --green-dark:   #0F2744; /* Verde escuro para hover e textos */
+  --green-light:  #e8f5e8; /* Verde claro para fundos sutis */
+  --green-mid:    #0af; /* Verde médio para destaques */
+  --yellow:       #00AAFF; /* Amarelo para ênfase no hero */
+  --yellow-soft:  #fef9e7; /* Amarelo suave para fundos */
+
+  /* Tons escuros usados no header e footer */
+  --navy:         #0B1A2E; /* Azul-marinho principal */
+  --navy-mid:     #1B3A5C; /* Azul-marinho médio */
+
+  /* Escala de cinzas para textos e bordas */
+  --gray-900:     #111827; /* Quase preto — texto principal */
+  --gray-700:     #374151; /* Cinza escuro — textos secundários */
+  --gray-500:     #6b7280; /* Cinza médio — legendas */
+  --gray-300:     #d1d5db; /* Cinza claro — bordas */
+  --gray-100:     #f3f4f6; /* Cinza muito claro — fundos de cards */
+  --gray-50:      #f9fafb; /* Cinza quase branco — fundo de seções */
+  --white:        #ffffff; /* Branco puro */
+
+  /* Bordas arredondadas em diferentes tamanhos */
+  --radius-sm:    6px;  /* Bordas pequenas — botões e inputs */
+  --radius-md:    12px; /* Bordas médias — cards menores */
+  --radius-lg:    20px; /* Bordas grandes — cards principais */
+  --radius-xl:    28px; /* Bordas extra grandes — modais */
+
+  /* Sombras em três níveis de profundidade */
+  --shadow-sm:    0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04); /* Sombra sutil */
+  --shadow-md:    0 4px 16px rgba(0,0,0,.1);  /* Sombra média — hover */
+  --shadow-lg:    0 12px 40px rgba(0,0,0,.14); /* Sombra forte — modais */
+
+  /* Famílias tipográficas (importadas do Google Fonts) */
+  --font-display: 'Syne', sans-serif;   /* Fonte para títulos e destaques */
+  --font-body:    'DM Sans', sans-serif; /* Fonte para texto corrido */
+
+  /* Duração padrão de transições/animações */
   --transition:   0.2s ease;
 }
 
-html { scroll-behavior: smooth; font-size: 16px; }
+/* ─────────────────────────────────────────────
+   TAMANHOS DE FONTE (Acessibilidade)
+   Classes adicionadas ao <body> pelo JavaScript
+   quando o usuário ajusta o tamanho da fonte.
+───────────────────────────────────────────── */
+body.font-lg { font-size: 18px; } /* Fonte aumentada */
+body.font-xl { font-size: 20px; } /* Fonte muito aumentada */
+body.font-sm { font-size: 14px; } /* Fonte reduzida */
+
+
+/* ─────────────────────────────────────────────
+   CONFIGURAÇÕES GLOBAIS DO BODY E HTML
+───────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth; /* Rolagem suave ao clicar em âncoras (#seção) */
+  font-size: 16px;          /* Tamanho base da fonte */
+}
 
 body {
   font-family: var(--font-body);
   color: var(--gray-900);
   background: var(--white);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;                    /* Altura de linha confortável para leitura */
+  -webkit-font-smoothing: antialiased; /* Suaviza a renderização das fontes no macOS/iOS */
 }
 
-body.high-contrast {
-  --green:       #00cc00;
-  --navy:        #000000;
-  --gray-900:    #000000;
-  --gray-700:    #111111;
-  --gray-50:     #ffffff;
-  --white:       #ffffff;
-  background: #fff;
-}
 
-body.font-lg  { font-size: 18px; }
-body.font-xl  { font-size: 20px; }
-body.font-sm  { font-size: 14px; }
-
+/* ─────────────────────────────────────────────
+   CONTAINER CENTRALIZADO
+   Limita a largura do conteúdo e centraliza
+   horizontalmente com padding lateral.
+───────────────────────────────────────────── */
 .container {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
+  max-width: 1160px; /* Largura máxima do conteúdo */
+  margin: 0 auto;    /* Centraliza horizontalmente */
+  padding: 0 1.5rem; /* Espaçamento lateral em telas menores */
 }
 
-a { color: inherit; text-decoration: none; }
-img { max-width: 100%; display: block; }
-ul { list-style: none; }
-button { cursor: pointer; font-family: var(--font-body); }
 
-/* ─── BARRA ACESSIBILIDADE ─── */
+/* ─────────────────────────────────────────────
+   RESETS ADICIONAIS
+   Corrigem comportamentos padrão inconsistentes
+   entre navegadores.
+───────────────────────────────────────────── */
+a   { color: inherit; text-decoration: none; } /* Links herdam a cor do pai */
+img { max-width: 100%; display: block; }        /* Imagens responsivas e sem espaço extra */
+ul  { list-style: none; }                       /* Remove marcadores de listas */
+button { cursor: pointer; font-family: var(--font-body); } /* Botões com cursor de mão e fonte correta */
+
+
+/* ══════════════════════════════════════════════
+   BARRA DE ACESSIBILIDADE
+   Faixa escura no topo com controles de fonte,
+   alto contraste e links do governo.
+══════════════════════════════════════════════ */
 .a11y-bar {
-  background: var(--navy);
+  background: #1B3A5C;
   color: #cbd5e1;
   font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.35rem 1.5rem;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Quebra linha em telas muito pequenas */
   gap: 0.5rem;
 }
-.a11y-inner { display: flex; align-items: center; gap: 0.5rem; }
-.a11y-right { display: flex; gap: 1rem; }
-.a11y-right a { color: #94a3b8; transition: color var(--transition); }
+
+.a11y-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Espaçamento entre os botões de acessibilidade */
+}
+
+.a11y-right {
+  display: flex;
+  gap: 1rem; /* Espaçamento entre os links do governo */
+}
+
+.a11y-right a {
+  color: #94a3b8;
+  transition: color var(--transition);
+}
 .a11y-right a:hover { color: #fff; }
+
+/* Botões A- A A+ e Alto contraste */
 .a11y-bar button {
   background: transparent;
   border: 1px solid rgba(255,255,255,.2);
@@ -96,16 +157,23 @@ button { cursor: pointer; font-family: var(--font-body); }
 }
 .a11y-bar button:hover { background: rgba(255,255,255,.15); color: #fff; }
 
-/* ─── HEADER ─── */
+
+/* ══════════════════════════════════════════════
+   CABEÇALHO PRINCIPAL
+   Fica fixo no topo com position: sticky.
+   Abaixo do conteúdo que passa por ele graças
+   ao z-index alto.
+══════════════════════════════════════════════ */
 .site-header {
-  position: sticky;
+  position: sticky; /* Gruda no topo ao rolar a página */
   top: 0;
-  z-index: 1000;
+  z-index: 1000;    /* Fica acima de outros elementos */
   background: var(--white);
   border-bottom: 1px solid var(--gray-100);
   box-shadow: var(--shadow-sm);
 }
 
+/* Layout interno do header: logo | nav | ações */
 .header-inner {
   display: flex;
   align-items: center;
@@ -114,42 +182,52 @@ button { cursor: pointer; font-family: var(--font-body); }
   padding-bottom: 0.85rem;
 }
 
+/* ── Logotipo ── */
 .logo-area {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-shrink: 0;
+  flex-shrink: 0; /* Impede o logo de encolher */
   text-decoration: none;
 }
+
+/* Quadrado verde com o ícone do carro */
 .logo-badge {
   width: 42px;
   height: 42px;
-  background: var(--green);
+  background: #ffffff;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
 }
+/* Versão menor do badge usada no rodapé */
 .logo-badge.small { width: 34px; height: 34px; font-size: 16px; }
+
+/* Texto "DETRAN / Paraíba" ao lado do badge */
 .logo-text { line-height: 1.15; }
 .logo-text strong {
   display: block;
   font-family: var(--font-display);
   font-size: 18px;
   font-weight: 800;
-  color: var(--green-dark);
+  color: #1E90FF;
   letter-spacing: -.5px;
 }
-.logo-text span { font-size: 11px; color: var(--gray-500); font-weight: 400; }
+.logo-text span { font-size: 11px; color: #6b7280; font-weight: 400; }
 
-/* NAV */
-.main-nav { flex: 1; }
+
+/* ── Menu de navegação principal ── */
+.main-nav { flex: 1; } /* Ocupa todo o espaço disponível entre logo e ações */
+
 .main-nav > ul {
   display: flex;
   align-items: center;
   gap: 0.25rem;
 }
+
+/* Links do menu */
 .main-nav a {
   font-size: 14px;
   font-weight: 500;
@@ -157,14 +235,19 @@ button { cursor: pointer; font-family: var(--font-body); }
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-sm);
   transition: background var(--transition), color var(--transition);
-  white-space: nowrap;
+  white-space: nowrap; /* Impede o texto de quebrar linha */
 }
-.main-nav a:hover { background: var(--green-light); color: var(--green-dark); }
+.main-nav a:hover { background: var(--green-light); color: #0D3B6E; }
+
+/* Setinha indicadora de submenu */
 .caret { font-size: 10px; opacity: .6; }
-.has-dropdown { position: relative; }
+
+/* ── Dropdown (submenu) ── */
+.has-dropdown { position: relative; } /* Ancora o submenu ao item pai */
+
 .dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
+  position: absolute;  /* Sai do fluxo normal para sobrepor o conteúdo */
+  top: calc(100% + 8px); /* Logo abaixo do item do menu */
   left: 0;
   background: var(--white);
   border: 1px solid var(--gray-200, #e5e7eb);
@@ -172,18 +255,22 @@ button { cursor: pointer; font-family: var(--font-body); }
   box-shadow: var(--shadow-lg);
   min-width: 220px;
   padding: 0.5rem;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-6px);
+  opacity: 0;            /* Invisível por padrão */
+  pointer-events: none;  /* Não interage com o mouse quando oculto */
+  transform: translateY(-6px); /* Deslocado ligeiramente para cima */
   transition: opacity var(--transition), transform var(--transition);
   z-index: 200;
 }
+
+/* Exibe o dropdown ao passar o mouse ou focar no item pai */
 .has-dropdown:hover .dropdown,
 .has-dropdown:focus-within .dropdown {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
+  transform: translateY(0); /* Volta à posição original com animação suave */
 }
+
+/* Links dentro do dropdown */
 .dropdown li a {
   display: block;
   padding: 0.55rem 0.85rem;
@@ -193,22 +280,40 @@ button { cursor: pointer; font-family: var(--font-body); }
 }
 .dropdown li a:hover { background: var(--green-light); color: var(--green-dark); }
 
-/* HEADER ACTIONS */
-.header-actions { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
 
+/* ── Ações do cabeçalho (lupa, botão, hambúrguer) ── */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Botão da lupa de busca */
 .btn-search {
-  width: 38px; height: 38px;
+  width: 38px;
+  height: 38px;
   border: 1px solid var(--gray-300);
   border-radius: var(--radius-sm);
   background: transparent;
   color: var(--gray-700);
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background var(--transition), border-color var(--transition);
 }
-.btn-search:hover { background: var(--green-light); border-color: var(--green); color: var(--green-dark); }
+.btn-search:hover {
+  background: var(--green-light);
+  border-color: #1E90FF;
+  color: #00AAFF;
+}
 
+
+/* ── Botões reutilizáveis ── */
+
+/* Botão primário verde — usado em todo o site */
 .btn-primary {
-  background: var(--green);
+  background: #1B3A5C;
   color: var(--white);
   border: none;
   padding: 0.6rem 1.25rem;
@@ -218,10 +323,12 @@ button { cursor: pointer; font-family: var(--font-body); }
   transition: background var(--transition), transform var(--transition);
   display: inline-block;
 }
-.btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
-.btn-primary:active { transform: translateY(0); }
+.btn-primary:hover { background: #0D3B6E; transform: translateY(-1px); } /* Sobe levemente no hover */
+.btn-primary:active { transform: translateY(0); } /* Volta ao lugar ao clicar */
+/* Variante que ocupa 100% da largura do container */
 .btn-primary.full-width { width: 100%; text-align: center; padding: 0.8rem; font-size: 15px; }
 
+/* Botão fantasma (ghost) — borda e transparente */
 .btn-ghost {
   background: transparent;
   border: 1px solid var(--gray-300);
@@ -233,45 +340,65 @@ button { cursor: pointer; font-family: var(--font-body); }
 }
 .btn-ghost:hover { background: var(--gray-100); }
 
+/* Botão de contorno verde — para CTAs secundários */
 .btn-outline {
   display: inline-block;
-  border: 1.5px solid var(--green);
-  color: var(--green-dark);
+  border: 1.5px solid #1E90FF;
+  color: #0D3B6E;
   padding: 0.7rem 1.5rem;
   border-radius: var(--radius-sm);
   font-weight: 500;
   font-size: 14px;
   transition: background var(--transition), color var(--transition);
 }
-.btn-outline:hover { background: var(--green); color: var(--white); }
+.btn-outline:hover { background: #0D3B6E; color: var(--white); }
 
+
+/* ── Botão hambúrguer (três linhas — mobile) ── */
 .hamburger {
-  display: none;
+  display: none; /* Oculto em desktop; aparece em mobile via media query */
   flex-direction: column;
   gap: 5px;
   background: transparent;
   border: none;
   padding: 4px;
 }
+
+/* Cada linha do ícone ≡ */
 .hamburger span {
-  width: 22px; height: 2px;
+  width: 22px;
+  height: 2px;
   background: var(--gray-700);
   border-radius: 2px;
   transition: transform 0.3s, opacity 0.3s;
 }
+
+/* Transforma as três linhas em ✕ quando o menu está aberto */
 .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* SEARCH BAR */
+
+/* ── Barra de busca expansível ── */
 .search-bar {
-  background: var(--green-dark);
+  background: #0D3B6E;
   padding: 1rem 0;
-  display: none;
+  display: none; /* Oculta por padrão; JavaScript adiciona .open */
 }
+
+/* Exibe com animação quando aberta */
 .search-bar.open { display: block; animation: slideDown .2s ease; }
-@keyframes slideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+
+/* Animação de entrada da barra de busca */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Layout interno da barra de busca */
 .search-bar .container { display: flex; gap: 0.75rem; align-items: center; }
+
+/* Campo de texto da busca */
 .search-bar input {
   flex: 1;
   padding: 0.75rem 1rem;
@@ -281,15 +408,20 @@ button { cursor: pointer; font-family: var(--font-body); }
   font-family: var(--font-body);
   outline: none;
 }
+
+/* Container das sugestões de busca (aparece abaixo do campo) */
 .search-suggestions {
   background: var(--white);
   border-radius: 0 0 var(--radius-md) var(--radius-md);
   padding: 0 1.5rem;
   overflow: hidden;
-  max-height: 0;
-  transition: max-height .3s;
+  max-height: 0;             /* Oculto por padrão com altura zero */
+  transition: max-height .3s; /* Animação suave ao expandir */
 }
+/* Classe .visible abre o container de sugestões */
 .search-suggestions.visible { max-height: 300px; padding: 0.75rem 1.5rem; }
+
+/* Cada item de sugestão dentro da lista */
 .sugg-item {
   padding: 0.6rem 0;
   border-bottom: 1px solid var(--gray-100);
@@ -299,30 +431,42 @@ button { cursor: pointer; font-family: var(--font-body); }
   transition: color var(--transition);
 }
 .sugg-item:hover { color: var(--green-dark); }
-.sugg-item:last-child { border-bottom: none; }
+.sugg-item:last-child { border-bottom: none; } /* Remove borda do último item */
 
-/* ─── HERO ─── */
+
+/* ══════════════════════════════════════════════
+   SEÇÃO HERO — Banner principal
+   Fundo escuro com gradiente, texto branco
+   e o card de consulta rápida à direita.
+══════════════════════════════════════════════ */
 .hero {
   background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
   color: var(--white);
   padding: 5rem 0 4rem;
-  position: relative;
-  overflow: hidden;
+  position: relative; /* Necessário para posicionar o .hero-bg com position:absolute */
+  overflow: hidden;   /* Recorta os gradientes decorativos nas bordas */
 }
+
+/* Camada decorativa de gradientes radiais sobre o fundo */
 .hero-bg {
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0; /* Equivale a top:0; right:0; bottom:0; left:0 */
   background:
-    radial-gradient(ellipse 600px 400px at 80% 50%, rgba(0,163,0,.18) 0%, transparent 70%),
-    radial-gradient(ellipse 300px 300px at 10% 80%, rgba(245,200,0,.06) 0%, transparent 60%);
-  pointer-events: none;
+    radial-gradient(ellipse 600px 400px at 80% 50%, #1E90FF 0%, transparent 70%),
+    radial-gradient(ellipse 300px 300px at 10% 80%, #0D3B6E 0%, transparent 60%);
+  pointer-events: none; /* Não bloqueia cliques — é apenas decorativo */
 }
+
+/* Grid de duas colunas: texto | card */
 .hero-content {
   display: grid;
-  grid-template-columns: 1fr 380px;
+  grid-template-columns: 1fr 380px; /* Coluna de texto flexível + card fixo em 380px */
   gap: 3rem;
   align-items: center;
-  position: relative;
+  position: relative; /* Para ficar acima do .hero-bg */
 }
+
+/* Pequeno texto acima do título (eyebrow) */
 .hero-eyebrow {
   font-size: 12px;
   letter-spacing: 1.5px;
@@ -331,17 +475,26 @@ button { cursor: pointer; font-family: var(--font-body); }
   font-weight: 500;
   margin-bottom: 1rem;
 }
+
+/* Título principal do hero */
 .hero h1 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-size: clamp(2rem, 4vw, 3.25rem); /* Tamanho fluido: mín 2rem, máx 3.25rem */
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 1.25rem;
   letter-spacing: -1px;
 }
+/* A palavra em itálico recebe cor amarela */
 .hero h1 em { color: var(--yellow); font-style: normal; }
+
+/* Subtítulo abaixo do título principal */
 .hero-subtitle { font-size: 17px; color: #94a3b8; margin-bottom: 2rem; max-width: 440px; }
+
+/* Botões de ação do hero em linha */
 .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* Botão primário do hero (sólido) */
 .btn-hero-primary {
   background: var(--green);
   color: var(--white);
@@ -353,6 +506,8 @@ button { cursor: pointer; font-family: var(--font-body); }
   display: inline-block;
 }
 .btn-hero-primary:hover { background: var(--green-dark); transform: translateY(-2px); }
+
+/* Botão fantasma do hero (contorno transparente) */
 .btn-hero-ghost {
   border: 1.5px solid rgba(255,255,255,.3);
   color: var(--white);
@@ -364,7 +519,8 @@ button { cursor: pointer; font-family: var(--font-body); }
 }
 .btn-hero-ghost:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.6); }
 
-/* HERO CARD */
+
+/* ── Card de consulta rápida (parte branca do hero) ── */
 .hero-card {
   background: var(--white);
   border-radius: var(--radius-lg);
@@ -372,6 +528,8 @@ button { cursor: pointer; font-family: var(--font-body); }
   box-shadow: var(--shadow-lg);
   color: var(--gray-900);
 }
+
+/* Rótulo discreto acima das abas */
 .card-label {
   font-size: 12px;
   font-weight: 600;
@@ -380,14 +538,18 @@ button { cursor: pointer; font-family: var(--font-body); }
   color: var(--gray-500);
   margin-bottom: 1rem;
 }
+
+/* Container das abas (CNH / Veículo / Multa) */
 .quick-tabs {
   display: flex;
   gap: 4px;
-  background: var(--gray-100);
+  background: var(--gray-100); /* Fundo acinzentado atrás das abas */
   border-radius: var(--radius-sm);
   padding: 4px;
   margin-bottom: 1.25rem;
 }
+
+/* Cada aba individualmente */
 .qtab {
   flex: 1;
   padding: 0.45rem 0;
@@ -399,11 +561,23 @@ button { cursor: pointer; font-family: var(--font-body); }
   color: var(--gray-500);
   transition: background var(--transition), color var(--transition), box-shadow var(--transition);
 }
+/* Aba ativa: fundo branco com sombra sutil */
 .qtab.active { background: var(--white); color: var(--gray-900); box-shadow: var(--shadow-sm); }
 
-.qtab-content { display: none; }
-.qtab-content.active { display: block; }
-.qtab-content label { display: block; font-size: 13px; font-weight: 500; color: var(--gray-700); margin-bottom: 6px; }
+/* Conteúdo de cada aba (input + botão) */
+.qtab-content { display: none; } /* Oculto por padrão */
+.qtab-content.active { display: block; } /* Ativo quando a aba correspondente está selecionada */
+
+/* Rótulo dos campos do card */
+.qtab-content label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-700);
+  margin-bottom: 6px;
+}
+
+/* Campos de input do card */
 .qtab-content input {
   width: 100%;
   padding: 0.7rem 0.9rem;
@@ -416,20 +590,28 @@ button { cursor: pointer; font-family: var(--font-body); }
   outline: none;
   color: var(--gray-900);
 }
-.qtab-content input:focus { border-color: var(--green); }
+.qtab-content input:focus { border-color: var(--green); } /* Borda verde ao focar */
 
-/* ─── STATS BAR ─── */
+
+/* ══════════════════════════════════════════════
+   BARRA DE ESTATÍSTICAS
+   Faixa verde com números institucionais.
+══════════════════════════════════════════════ */
 .stats-bar {
   background: var(--green);
   padding: 1.25rem 0;
 }
+
+/* Layout flexível centralizado com os itens */
 .stats-inner {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Quebra linha em telas menores */
 }
+
+/* Cada bloco de número + legenda */
 .stat-item { text-align: center; color: var(--white); }
 .stat-item strong {
   display: block;
@@ -439,9 +621,16 @@ button { cursor: pointer; font-family: var(--font-body); }
   line-height: 1;
 }
 .stat-item span { font-size: 12px; opacity: .85; font-weight: 400; }
+
+/* Linha divisória vertical entre os itens */
 .stat-divider { width: 1px; height: 40px; background: rgba(255,255,255,.3); }
 
-/* ─── SECTION HEADER ─── */
+
+/* ══════════════════════════════════════════════
+   CABEÇALHO DE SEÇÃO REUTILIZÁVEL
+   Usado em várias seções: título + subtítulo
+   alinhados à esquerda, com link "ver todos" à direita.
+══════════════════════════════════════════════ */
 .section-header {
   margin-bottom: 2.5rem;
   display: flex;
@@ -458,22 +647,32 @@ button { cursor: pointer; font-family: var(--font-body); }
   letter-spacing: -.5px;
 }
 .section-header p { color: var(--gray-500); font-size: 15px; }
+
+/* Link "Ver todas →" no canto direito do cabeçalho */
 .link-all { font-size: 14px; color: var(--green-dark); font-weight: 500; white-space: nowrap; }
 .link-all:hover { text-decoration: underline; }
 
-/* ─── SERVIÇOS ─── */
+
+/* ══════════════════════════════════════════════
+   SEÇÃO DE SERVIÇOS
+   Grid de cards filtráveis por categoria.
+══════════════════════════════════════════════ */
 .services-section { padding: 5rem 0; background: var(--gray-50); }
 
+
+/* ── Botões de filtro por categoria ── */
 .services-filter {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
   margin-bottom: 2rem;
 }
+
+/* Cada botão de filtro */
 .filter-btn {
   padding: 0.5rem 1rem;
   border: 1.5px solid var(--gray-300);
-  border-radius: 100px;
+  border-radius: 100px; /* Formato de pílula */
   background: var(--white);
   font-size: 13px;
   font-weight: 500;
@@ -481,13 +680,18 @@ button { cursor: pointer; font-family: var(--font-body); }
   transition: all var(--transition);
 }
 .filter-btn:hover { border-color: var(--green); color: var(--green-dark); }
+/* Botão ativo: fundo e borda verdes */
 .filter-btn.active { background: var(--green); border-color: var(--green); color: var(--white); }
 
+
+/* ── Grid de cards de serviço ── */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Colunas responsivas automáticas */
   gap: 1.25rem;
 }
+
+/* Cada card de serviço individual */
 .service-card {
   background: var(--white);
   border: 1px solid var(--gray-100);
@@ -499,15 +703,25 @@ button { cursor: pointer; font-family: var(--font-body); }
   gap: 0.6rem;
   cursor: pointer;
 }
+/* Efeito de elevação ao passar o mouse */
 .service-card:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-3px);
   border-color: var(--green-light);
 }
+/* Card oculto pelo filtro JavaScript */
 .service-card.hidden { display: none; }
+
+/* Ícone emoji do card */
 .service-icon { font-size: 2rem; }
+
+/* Título do card */
 .service-card h3 { font-size: 15px; font-weight: 600; color: var(--gray-900); }
+
+/* Descrição do card */
 .service-card p { font-size: 13.5px; color: var(--gray-500); line-height: 1.5; flex: 1; }
+
+/* Badge de categoria (ex: "Habilitação") */
 .service-tag {
   display: inline-block;
   font-size: 11px;
@@ -519,19 +733,25 @@ button { cursor: pointer; font-family: var(--font-body); }
   width: fit-content;
 }
 
+/* Botão "Ver todos os serviços" centralizado abaixo do grid */
 .services-cta { text-align: center; margin-top: 2.5rem; }
 
-/* ─── AGENDAMENTO ─── */
-.agendamento-section {
-  padding: 5rem 0;
-  background: var(--white);
-}
+
+/* ══════════════════════════════════════════════
+   SEÇÃO DE AGENDAMENTO
+   Layout em duas colunas: texto | formulário.
+══════════════════════════════════════════════ */
+.agendamento-section { padding: 5rem 0; background: var(--white); }
+
+/* Grade de duas colunas iguais */
 .agendamento-inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  align-items: start;
+  align-items: start; /* Alinha pelo topo, não pelo centro */
 }
+
+/* Título da seção de agendamento */
 .agendamento-text h2 {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 2.5vw, 2rem);
@@ -540,18 +760,29 @@ button { cursor: pointer; font-family: var(--font-body); }
   letter-spacing: -.5px;
 }
 .agendamento-text p { color: var(--gray-500); font-size: 15px; margin-bottom: 1.5rem; line-height: 1.7; }
+
+/* Lista de benefícios com check verde */
 .agend-features { display: flex; flex-direction: column; gap: 0.5rem; }
 .agend-features li { font-size: 14px; color: var(--gray-700); }
 
-/* FORM */
+
+/* ── Formulários (agendamento e contato) ── */
 .agendamento-form, .contato-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1rem; /* Espaçamento entre os campos */
 }
+
+/* Linha com dois campos lado a lado */
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+/* Grupo de label + campo */
 .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+/* Rótulo do campo */
 .form-group label { font-size: 13px; font-weight: 500; color: var(--gray-700); }
+
+/* Estilo unificado para input, select e textarea */
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -566,11 +797,20 @@ button { cursor: pointer; font-family: var(--font-body); }
   outline: none;
   width: 100%;
 }
+/* Borda verde e sombra suave ao focar no campo */
 .form-group input:focus,
 .form-group select:focus,
-.form-group textarea:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(0,163,0,.12); }
+.form-group textarea:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(0,163,0,.12);
+}
+/* Textarea pode ser redimensionada verticalmente */
 .form-group textarea { resize: vertical; min-height: 100px; }
+
+/* Nota abaixo do botão do formulário */
 .form-note { font-size: 12px; color: var(--gray-500); text-align: center; margin-top: 0.25rem; }
+
+/* Mensagem de sucesso após envio do formulário */
 .form-success {
   background: var(--green-light);
   color: var(--green-dark);
@@ -580,88 +820,30 @@ button { cursor: pointer; font-family: var(--font-body); }
   border: 1px solid rgba(0,163,0,.2);
 }
 
-/* ─── NOTÍCIAS ─── */
-.noticias-section { padding: 5rem 0; background: var(--gray-50); }
-.noticias-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 1.25rem;
-}
-.noticia-card {
-  background: var(--white);
-  border: 1px solid var(--gray-100);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  transition: box-shadow var(--transition), transform var(--transition);
-}
-.noticia-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-.noticia-card.destaque { grid-row: 1 / 3; }
-.noticia-tag {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 100px;
-  background: var(--gray-100);
-  color: var(--gray-700);
-  width: fit-content;
-}
-.noticia-tag.urgente { background: #fef3c7; color: #92400e; }
-.noticia-card h3 { font-size: 16px; font-weight: 600; color: var(--gray-900); line-height: 1.4; }
-.noticia-card.destaque h3 { font-size: 20px; }
-.noticia-card p { font-size: 14px; color: var(--gray-500); line-height: 1.6; flex: 1; }
-.noticia-meta { display: flex; justify-content: space-between; align-items: center; }
-.noticia-meta time { font-size: 12px; color: var(--gray-500); }
-.noticia-link { font-size: 13px; font-weight: 500; color: var(--green-dark); }
-.noticia-link:hover { text-decoration: underline; }
 
-/* ─── CIRETRANS ─── */
-.ciretrans-section { padding: 5rem 0; background: var(--white); }
-.ciretrans-search { margin-bottom: 2rem; }
-.ciretrans-search input {
-  width: 100%;
-  max-width: 440px;
-  padding: 0.85rem 1.2rem;
-  border: 1.5px solid var(--gray-300);
-  border-radius: var(--radius-sm);
-  font-size: 15px;
-  font-family: var(--font-body);
-  outline: none;
-  transition: border-color var(--transition);
-}
-.ciretrans-search input:focus { border-color: var(--green); }
-.ciretrans-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
-}
-.ciretran-card {
-  background: var(--gray-50);
-  border: 1px solid var(--gray-100);
-  border-radius: var(--radius-md);
-  padding: 1.25rem;
-  font-size: 14px;
-}
-.ciretran-card h4 { font-size: 15px; font-weight: 600; color: var(--gray-900); margin-bottom: 0.35rem; }
-.ciretran-card p { color: var(--gray-500); margin-bottom: 0.2rem; font-size: 13px; }
-.ciretran-card .hidden { display: none; }
 
-/* ─── APP BANNER ─── */
+
+
+/* ══════════════════════════════════════════════
+   SEÇÃO BANNER DO APLICATIVO MOBILE
+   Fundo escuro com texto à esquerda e
+   mockup de celular à direita.
+══════════════════════════════════════════════ */
 .app-banner {
   background: linear-gradient(135deg, var(--navy) 0%, #0f2027 100%);
   padding: 5rem 0;
   color: var(--white);
 }
+
+/* Grade: texto | mockup do celular */
 .app-inner {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto; /* Texto flexível + mockup com tamanho natural */
   gap: 4rem;
   align-items: center;
 }
+
+/* Texto acima do título (eyebrow) */
 .app-eyebrow {
   font-size: 12px;
   text-transform: uppercase;
@@ -670,6 +852,8 @@ button { cursor: pointer; font-family: var(--font-body); }
   font-weight: 500;
   margin-bottom: 1rem;
 }
+
+/* Título do banner do app */
 .app-text h2 {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 3vw, 2.5rem);
@@ -678,7 +862,11 @@ button { cursor: pointer; font-family: var(--font-body); }
   letter-spacing: -.5px;
 }
 .app-text p { color: #94a3b8; font-size: 16px; margin-bottom: 2rem; max-width: 480px; line-height: 1.7; }
+
+/* Botões das lojas em linha */
 .app-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* Cada botão de loja (Google Play / App Store) */
 .store-btn {
   display: flex;
   align-items: center;
@@ -696,29 +884,41 @@ button { cursor: pointer; font-family: var(--font-body); }
 .store-btn small { display: block; font-size: 11px; opacity: .7; }
 .store-btn strong { font-size: 16px; font-weight: 600; }
 
-/* PHONE MOCKUP */
+
+/* ── Mockup decorativo do celular ── */
+/* Representa o app visualmente como um smartphone */
 .phone-mockup {
   width: 200px;
   background: var(--navy);
   border: 3px solid rgba(255,255,255,.15);
-  border-radius: 32px;
+  border-radius: 32px; /* Bordas bem arredondadas simulando um smartphone */
   padding: 20px 14px;
-  box-shadow: 0 30px 60px rgba(0,0,0,.4);
+  box-shadow: 0 30px 60px rgba(0,0,0,.4); /* Sombra profunda para profundidade */
 }
-.phone-screen { background: #0f172a; border-radius: 18px; overflow: hidden; }
+
+/* Tela do celular com fundo escuro */
+.phone-screen {
+  background: #0f172a;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+/* Entalhe superior do celular (notch) */
 .phone-notch {
-  width: 60px; height: 8px;
+  width: 60px;
+  height: 8px;
   background: #1e293b;
   border-radius: 0 0 8px 8px;
   margin: 0 auto 16px;
 }
+
+/* Área da interface do app simulado */
 .phone-ui { padding: 0 12px 16px; }
-.phone-greeting {
-  font-size: 12px;
-  color: #94a3b8;
-  margin-bottom: 12px;
-  padding: 0 4px;
-}
+
+/* Saudação ao usuário no app */
+.phone-greeting { font-size: 12px; color: #94a3b8; margin-bottom: 12px; padding: 0 4px; }
+
+/* Cards de status dentro do app (CNH, CRLV, Multas) */
 .phone-card {
   background: #1e293b;
   border-radius: 10px;
@@ -730,18 +930,28 @@ button { cursor: pointer; font-family: var(--font-body); }
   font-size: 12px;
   color: var(--white);
 }
-.phone-status { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 100px; }
-.phone-status.valid { background: rgba(0,163,0,.25); color: #4ade80; }
-.phone-status.none { background: rgba(245,200,0,.15); color: #fbbf24; }
 
-/* ─── CONTATO ─── */
+/* Badge de status dentro do card do app */
+.phone-status { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 100px; }
+.phone-status.valid { background: rgba(0,163,0,.25); color: #4ade80; } /* Verde: situação ok */
+.phone-status.none  { background: rgba(245,200,0,.15); color: #fbbf24; } /* Amarelo: nenhum item */
+
+
+/* ══════════════════════════════════════════════
+   SEÇÃO DE CONTATO
+   Layout em duas colunas: informações | formulário.
+══════════════════════════════════════════════ */
 .contato-section { padding: 5rem 0; background: var(--gray-50); }
+
+/* Grade: info à esquerda, formulário à direita */
 .contato-inner {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1fr 1.2fr; /* Formulário ligeiramente mais largo */
   gap: 4rem;
   align-items: start;
 }
+
+/* Título da seção de contato */
 .contato-info h2 {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 2.5vw, 2rem);
@@ -750,11 +960,17 @@ button { cursor: pointer; font-family: var(--font-body); }
   letter-spacing: -.5px;
 }
 .contato-info > p { color: var(--gray-500); font-size: 15px; margin-bottom: 2rem; }
+
+/* Lista de canais de atendimento */
 .contact-channels { display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 2rem; }
+
+/* Cada canal: ícone + texto lado a lado */
 .channel { display: flex; align-items: flex-start; gap: 1rem; }
 .channel-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
 .channel strong { display: block; font-size: 14px; font-weight: 600; color: var(--gray-900); }
-.channel span { font-size: 14px; color: var(--gray-500); }
+.channel span   { font-size: 14px; color: var(--gray-500); }
+
+/* Ícones das redes sociais em linha */
 .social-links { display: flex; gap: 0.75rem; }
 .social-links a {
   width: 40px; height: 40px;
@@ -766,6 +982,8 @@ button { cursor: pointer; font-family: var(--font-body); }
   transition: background var(--transition), border-color var(--transition), color var(--transition);
 }
 .social-links a:hover { background: var(--green-light); border-color: var(--green); color: var(--green-dark); }
+
+/* Título do formulário de contato */
 .contato-form-area h3 {
   font-family: var(--font-display);
   font-size: 1.25rem;
@@ -773,19 +991,39 @@ button { cursor: pointer; font-family: var(--font-body); }
   margin-bottom: 1.25rem;
 }
 
-/* ─── FOOTER ─── */
+
+/* ══════════════════════════════════════════════
+   RODAPÉ
+   Fundo escuro com logo, descrição e colunas
+   de links. Dividido em duas faixas:
+   footer-top (conteúdo) e footer-bottom (copyright).
+══════════════════════════════════════════════ */
 .site-footer { background: var(--navy); color: #94a3b8; }
+
+/* Faixa superior do rodapé: logo + 4 colunas de links */
 .footer-top {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 280px 1fr; /* Coluna da marca fixa + navegação flexível */
   gap: 4rem;
   padding: 3.5rem 0;
-  border-bottom: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,.08); /* Separador sutil */
 }
+
+/* Ajustes de cor do logo no rodapé (fundo escuro) */
 .footer-brand .logo-text strong { color: var(--white); }
-.footer-brand .logo-text span { color: #64748b; }
+.footer-brand .logo-text span   { color: #64748b; }
+
+/* Descrição institucional abaixo do logo */
 .footer-brand p { font-size: 13.5px; color: #64748b; margin-top: 1rem; line-height: 1.6; }
-.footer-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+
+/* Grade de 4 colunas de links */
+.footer-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+/* Título de cada coluna de links */
 .footer-col h4 {
   font-family: var(--font-display);
   font-size: 13px;
@@ -795,10 +1033,13 @@ button { cursor: pointer; font-family: var(--font-body); }
   letter-spacing: 1px;
   margin-bottom: 1rem;
 }
+
+/* Lista de links de cada coluna */
 .footer-col ul { display: flex; flex-direction: column; gap: 0.5rem; }
 .footer-col a { font-size: 13.5px; color: #64748b; transition: color var(--transition); }
 .footer-col a:hover { color: var(--white); }
 
+/* Faixa inferior do rodapé: copyright + links legais */
 .footer-bottom { padding: 1.25rem 0; }
 .footer-bottom-inner {
   display: flex;
@@ -809,11 +1050,18 @@ button { cursor: pointer; font-family: var(--font-body); }
   font-size: 12.5px;
   color: #475569;
 }
+
+/* Links legais (privacidade, acessibilidade, mapa do site) */
 .footer-links { display: flex; gap: 1.5rem; }
 .footer-links a { color: #475569; transition: color var(--transition); }
 .footer-links a:hover { color: var(--white); }
 
-/* ─── BACK TO TOP ─── */
+
+/* ══════════════════════════════════════════════
+   BOTÃO "VOLTAR AO TOPO"
+   Aparece fixo no canto inferior direito quando
+   o usuário rola a página 400px para baixo.
+══════════════════════════════════════════════ */
 .back-to-top {
   position: fixed;
   bottom: 1.5rem;
@@ -822,27 +1070,41 @@ button { cursor: pointer; font-family: var(--font-body); }
   background: var(--green);
   color: var(--white);
   border: none;
-  border-radius: 50%;
+  border-radius: 50%; /* Formato circular */
   font-size: 18px;
   display: flex; align-items: center; justify-content: center;
-  opacity: 0;
-  pointer-events: none;
+  opacity: 0;           /* Invisível por padrão */
+  pointer-events: none; /* Não responde ao mouse quando oculto */
   transition: opacity var(--transition), transform var(--transition);
   z-index: 999;
   box-shadow: var(--shadow-md);
 }
+/* O JavaScript adiciona .visible quando scrollY > 400px */
 .back-to-top.visible { opacity: 1; pointer-events: auto; }
 .back-to-top:hover { background: var(--green-dark); transform: translateY(-2px); }
 
-/* ─── MODAL ─── */
+
+/* ══════════════════════════════════════════════
+   MODAL DE RESULTADO DAS CONSULTAS
+   Overlay escuro + janela de resultado centralizada.
+   Exibido pelas funções de consulta no JavaScript.
+══════════════════════════════════════════════ */
+
+/* Fundo semi-transparente que cobre toda a tela */
 .modal-overlay {
-  position: fixed; inset: 0;
+  position: fixed;
+  inset: 0;
   background: rgba(0,0,0,.55);
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 2000;
   padding: 1rem;
 }
+/* O atributo hidden (controlado pelo JS) oculta o modal */
 .modal-overlay[hidden] { display: none; }
+
+/* Janela branca centralizada */
 .modal {
   background: var(--white);
   border-radius: var(--radius-lg);
@@ -851,11 +1113,19 @@ button { cursor: pointer; font-family: var(--font-body); }
   width: 100%;
   position: relative;
   box-shadow: var(--shadow-lg);
-  animation: modalIn .2s ease;
+  animation: modalIn .2s ease; /* Animação de entrada */
 }
-@keyframes modalIn { from { opacity:0; transform:scale(.95); } to { opacity:1; transform:scale(1); } }
+
+/* Animação de escala ao abrir o modal */
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Botão de fechar (✕) no canto superior direito */
 .modal-close {
-  position: absolute; top: 1rem; right: 1rem;
+  position: absolute;
+  top: 1rem; right: 1rem;
   background: var(--gray-100);
   border: none;
   width: 30px; height: 30px;
@@ -865,10 +1135,16 @@ button { cursor: pointer; font-family: var(--font-body); }
   transition: background var(--transition);
 }
 .modal-close:hover { background: var(--gray-300); }
+
+/* Título do modal */
 .modal h3 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; margin-bottom: 1.25rem; }
+
+/* Linhas de resultado dentro do modal */
 .modal-result-item { margin-bottom: 0.75rem; font-size: 14px; }
 .modal-result-item strong { color: var(--gray-900); margin-right: 6px; }
-.modal-result-item span { color: var(--gray-700); }
+.modal-result-item span   { color: var(--gray-700); }
+
+/* Badges de status dentro do modal */
 .modal-badge {
   display: inline-block;
   padding: 3px 12px;
@@ -876,24 +1152,45 @@ button { cursor: pointer; font-family: var(--font-body); }
   font-size: 12px;
   font-weight: 600;
 }
-.modal-badge.ok { background: var(--green-light); color: var(--green-dark); }
-.modal-badge.warn { background: #fef3c7; color: #92400e; }
-.modal-badge.error { background: #fee2e2; color: #991b1b; }
+.modal-badge.ok    { background: var(--green-light); color: var(--green-dark); } /* Verde: situação regular */
+.modal-badge.warn  { background: #fef3c7; color: #92400e; }                      /* Amarelo: atenção */
+.modal-badge.error { background: #fee2e2; color: #991b1b; }                      /* Vermelho: problema */
 
-/* ─── RESPONSIVO ─── */
+
+/* ══════════════════════════════════════════════
+   RESPONSIVIDADE — MEDIA QUERIES
+   Ajustes de layout para tablets e smartphones.
+   Breakpoints: 1024px (tablet), 768px (mobile),
+   480px (mobile pequeno).
+══════════════════════════════════════════════ */
+
+/* ── Tablet (até 1024px) ── */
 @media (max-width: 1024px) {
+  /* Hero passa de 2 colunas para coluna única */
   .hero-content { grid-template-columns: 1fr; }
   .hero-card { max-width: 420px; }
+
+  /* Notícias: de 3 para 2 colunas */
   .noticias-grid { grid-template-columns: 1fr 1fr; }
+  /* Destaque não ocupa mais 2 linhas */
   .noticia-card.destaque { grid-row: auto; }
+
+  /* Banner do app: oculta o mockup do celular */
   .app-inner { grid-template-columns: 1fr; }
   .app-visual { display: none; }
+
+  /* Rodapé: logo e nav empilhados */
   .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  /* Nav do rodapé: de 4 para 2 colunas */
   .footer-nav { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ── Mobile (até 768px) ── */
 @media (max-width: 768px) {
+  /* Oculta o menu de navegação horizontal */
   .main-nav { display: none; }
+
+  /* Menu aberto pelo hambúrguer: cobre toda a tela */
   .main-nav.mobile-open {
     display: flex;
     position: fixed;
@@ -905,33 +1202,74 @@ button { cursor: pointer; font-family: var(--font-body); }
     z-index: 900;
     animation: fadeIn .2s ease;
   }
-  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-  .main-nav.mobile-open > ul {
-    flex-direction: column;
-    gap: 0.25rem;
-    text-align: center;
+
+  /* Animação de entrada do menu mobile */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
-  .main-nav.mobile-open a { font-size: 1.1rem; padding: 0.75rem 1.5rem; }
-  .dropdown { position: static; opacity: 1; pointer-events: auto; transform: none; box-shadow: none; border: none; padding: 0; }
+
+  /* Links do menu mobile maiores e centralizados */
+  .main-nav.mobile-open > ul { flex-direction: column; gap: 0.25rem; text-align: center; }
+  .main-nav.mobile-open a    { font-size: 1.1rem; padding: 0.75rem 1.5rem; }
+
+  /* Dropdowns no mobile ficam estáticos (sem absolute) */
+  .dropdown {
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+  }
+
+  /* Exibe o hambúrguer em mobile */
   .hamburger { display: flex; z-index: 1000; }
+
+  /* Oculta o botão "Agendar serviço" em mobile (pouca espaço) */
   .btn-primary:not(.full-width) { display: none; }
 
+  /* Hero com menos padding em mobile */
   .hero { padding: 3.5rem 0 3rem; }
   .hero-content { gap: 2rem; }
+
+  /* Seções de duas colunas viram coluna única */
   .agendamento-inner, .contato-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+
+  /* Notícias: coluna única */
   .noticias-grid { grid-template-columns: 1fr; }
+
+  /* Formulário: campos empilhados */
   .form-row { grid-template-columns: 1fr; }
+
+  /* Barra de estatísticas: menor espaçamento */
   .stats-inner { gap: 1rem; }
+  /* Divisórias ocultas para não poluir em mobile */
   .stat-divider { display: none; }
+
+  /* Cabeçalho de seção empilhado */
   .section-header { flex-direction: column; align-items: flex-start; }
+
+  /* Rodapé: nav em 2 colunas menores */
   .footer-nav { grid-template-columns: 1fr 1fr; }
+
+  /* Copyright empilhado */
   .footer-bottom-inner { flex-direction: column; align-items: flex-start; }
+
+  /* Barra de acessibilidade menor e sem links do governo */
   .a11y-bar { font-size: 11px; }
   .a11y-right { display: none; }
 }
 
+/* ── Mobile pequeno (até 480px) ── */
 @media (max-width: 480px) {
+  /* Grid de serviços: 2 colunas em vez de auto-fill */
   .services-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Ciretrans: coluna única */
   .ciretrans-grid { grid-template-columns: 1fr; }
+
+  /* Rodapé: coluna única */
   .footer-nav { grid-template-columns: 1fr; }
 }
